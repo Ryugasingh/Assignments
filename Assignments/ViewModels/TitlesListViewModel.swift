@@ -11,10 +11,11 @@ import SwiftUI
 class TitlesListViewModel: ObservableObject {
     @Published var titles: [Series] = []
     @Published var isLoading: Bool = false
-    
+    @Published var errorMessage: String?
   
     func fetchTitles(for mediaType: MediaType) async {
         isLoading = true
+        errorMessage = nil
         defer { isLoading = false }
         
         do {
@@ -23,6 +24,10 @@ class TitlesListViewModel: ObservableObject {
                 self.titles = fetchedTitles
             }
         } catch {
+            await MainActor.run {
+                self.errorMessage = error.localizedDescription
+                self.titles = []
+            }
             print("Error fetching titles: \(error)")
         }
     }

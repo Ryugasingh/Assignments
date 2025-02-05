@@ -19,6 +19,7 @@ struct ContentView: View {
                         Text(type.rawValue).tag(type)
                     }
                 }
+                
                 .pickerStyle(.segmented)
                 .padding()
                 .onChange(of: selectedMedia) { newValue, oldValue in
@@ -26,6 +27,13 @@ struct ContentView: View {
                 
                         }
                 }
+                if let errorMessage = viewModel.errorMessage {
+                    Text(errorMessage)
+                        .foregroundColor(.red)
+                        .padding(.horizontal,40)
+                        .padding(.top , 240)
+                }
+                
                 ScrollView {
                     LazyVStack(alignment: .leading, spacing: 10) {
                         if viewModel.isLoading {
