@@ -9,6 +9,7 @@ import Foundation
 import SwiftUI
 
 class TitleDetailViewModel: ObservableObject {
+    
     @Published var details: TitleDetails?
     @Published var isLoading: Bool = false
     
